@@ -11,11 +11,16 @@ const Stack = createNativeStackNavigator();
 function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
+<<<<<<< HEAD
       <Text style={styles.text}>This is for ETH SEOUL!</Text>
       <Button
         title="This is button for idolpage"
         onPress={() => navigation.navigate('IdolPage')}
       />
+=======
+      <Text>It's for ETH SEOUL</Text>
+      <StatusBar style="auto" />
+>>>>>>> 75c37ac24853512d1ca5ff450ebc383a98c59f20
     </View>
   );
 }
