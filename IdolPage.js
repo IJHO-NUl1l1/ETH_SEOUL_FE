@@ -1,3 +1,4 @@
+//IdolPage.js
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
@@ -59,7 +60,7 @@ const idolpagestyles = StyleSheet.create({
     },
     topSection: {
       backgroundColor: "lightblue",
-      flex: 0.5, // 이미지가 상단 절반을 차지하도록 조정
+      flex: 1, // 이미지가 상단 절반을 차지하도록 조정
       alignItems: 'center',
       justifyContent: 'center',
       paddingTop: 50, // 상단 여백 조정
@@ -67,9 +68,9 @@ const idolpagestyles = StyleSheet.create({
     },
     profileImage: {
       marginTop:-10,
-      width: 230, // 이미지 너비 조정
-      height: 230, // 이미지 높이 조정
-      borderRadius: 50, // 이미지 둥글게 처리
+      width: 300, // 이미지 너비 조정
+      height: 300, // 이미지 높이 조정
+      borderRadius: 150, // 이미지 둥글게 처리
       borderWidth: 4, // 테두리 두께 조정
       borderColor: '#4B7BE5', // 테두리 색상 조정
     },
@@ -104,7 +105,7 @@ const idolpagestyles = StyleSheet.create({
       paddingVertical: 10, // 제목의 수직 여백
     },
     rank:{
-      flex:0.4,
+      flex:0.5,
     },
     rankList: {
       flex:0.5,
