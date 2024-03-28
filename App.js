@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import IdolPage from './IdolPage.js';
+import VotePage from './pages/VotePage.js'
 import { idolDB } from './idolDB.js';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Button, TextInput, TouchableHighlight} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -137,7 +138,7 @@ function HomeScreen({ navigation }) {
           <Icon name="person" size={24} color="gray" />
           <Text>User</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={Homestyles.sidebarButton} onPress={() => {}}>
+        <TouchableOpacity style={Homestyles.sidebarButton} onPress={() => {navigation.navigate('VotePage')}}>
           <Icon name="how-to-vote" size={24} color="gray" />
           <Text>Vote</Text>
         </TouchableOpacity>
@@ -152,6 +153,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="IdolPage" component={IdolPage} />
+        <Stack.Screen name="VotePage" component={VotePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
