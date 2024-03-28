@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const Stack = createNativeStackNavigator();
 
 
-function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState('home');
   
 
@@ -115,18 +115,6 @@ function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </View>
-  );
-}
-
-export default function Main() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="IdolPage" component={IdolPage} />
-        
-      </Stack.Navigator>
-    </NavigationContainer>
   );
 }
 
