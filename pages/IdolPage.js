@@ -16,7 +16,7 @@ const userData = [
     { id: '10', name: 'user10', value: 10 },
   ];
 
-const IdolPage  = () => {
+export default function IdolPage () {
 return (
   <View style={idolpagestyles.container}>
     {/* 상단 부분 */}
@@ -26,7 +26,7 @@ return (
         </View>
         <Image
         style={idolpagestyles.profileImage}
-        source={require('./Image/ProfileImage1.jpg')}
+        source={require('../Image/ProfileImage1.jpg')}
         />
         <Text style={idolpagestyles.profileName}>Kim Chaewon</Text>
     </View>
@@ -52,6 +52,8 @@ return (
   </View>
   );
 };
+
+
 
 const idolpagestyles = StyleSheet.create({
     container: {
@@ -139,4 +141,3 @@ const idolpagestyles = StyleSheet.create({
     },
   });
 
-  export default IdolPage;
