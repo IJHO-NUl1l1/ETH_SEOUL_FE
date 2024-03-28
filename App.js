@@ -14,6 +14,30 @@ const Stack = createNativeStackNavigator();
 
 function HomeScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState('home');
+  const [searchText, setSearchText] = useState(''); // 검색 텍스트 상태 추가
+
+  const filteredIdols = Object.entries(idolDB).filter(([key, idol]) =>
+    idol.name.toLowerCase().includes(searchText.toLowerCase()) ||
+    idol.agency.toLowerCase().includes(searchText.toLowerCase())
+);
+
+  const highlightText = (text, highlight) => {
+    if (!highlight.trim()) {
+      return <Text>{text}</Text>;
+    }
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return (
+      <Text>
+        {parts.map((part, index) => (
+          part.toLowerCase() === highlight.toLowerCase() ?
+          <Text key={index} style={{color: 'blue'}}>{part}</Text> :
+          part
+        ))}
+      </Text>
+    );
+  };
+
+  
   
 
   return (
@@ -63,32 +87,38 @@ function HomeScreen({ navigation }) {
           selectedTab === 'artist' ? (
           <View style={Homestyles.Artistpage}>
             <View style={Homestyles.Artisthead}>
-              <Text style={Homestyles.ArtistheadTitle}>FANPICK RANKING</Text>
-              <TextInput style={Homestyles.textinput} placeholder="아티스트 이름을 입력하세요." />
-            </View>
-            <ScrollView>
-              <View style={Homestyles.Artistcontents}>
-                {Object.values(idolDB).map((idol, index) => (
-                <TouchableHighlight key={index} underlayColor="#F5F5F5" onPress={() => navigation.navigate('IdolPage')}>
-                  <View style={Homestyles.profile}>
-                    <Image
-                      source={idol.profilePicture}
-                      style={Homestyles.profilePic}
-                    />
-                    <View style={Homestyles.idolinfo}>
-                      <View style={Homestyles.idolname}>
-                        <Text style ={{fontSize:17}}>{idol.name}</Text>
-                      </View>
-                      <View style={Homestyles.idolagency}>
-                        <Text style={{fontSize:14, color: '#808080',}}>{idol.agency}</Text>
-                      </View>
+        <Text style={Homestyles.ArtistheadTitle}>FANPICK RANKING</Text>
+        <TextInput
+          style={Homestyles.textinput}
+          placeholder="아티스트 이름을 입력하세요."
+          onChangeText={setSearchText}
+          value={searchText}
+        />
+        </View>
+        <ScrollView>
+        <View style={Homestyles.Artistcontents}>
+          {filteredIdols.length > 0 ? (
+            filteredIdols.map(([key,idol], index) => (
+              <TouchableHighlight key={index} underlayColor="#F5F5F5" onPress={() => navigation.navigate('IdolPage', { idolId: key })}>
+                <View style={Homestyles.profile}>
+                  <Image source={idol.profilePicture} style={Homestyles.profilePic} />
+                  <View style={Homestyles.idolinfo}>
+                    <View style={Homestyles.idolname}>
+                      {highlightText(idol.name, searchText)}
+                    </View>
+                    <View style={Homestyles.idolagency}>
+                      {highlightText(idol.agency, searchText)}
                     </View>
                   </View>
-                </TouchableHighlight>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
+                </View>
+              </TouchableHighlight>
+            ))
+          ) : (
+            <Text style={{ textAlign: 'center', marginTop: 20 }}>검색 결과가 없습니다.</Text>
+          )}
+        </View>
+      </ScrollView>
+      </View>
           ) : null
         }
       </View>

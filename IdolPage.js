@@ -1,34 +1,61 @@
 //IdolPage.js
 import { StatusBar } from 'expo-status-bar';
+import { useState, useEffect } from 'react';
 import React from 'react';
+import { idolDB } from './idolDB.js';
 import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 
-const userData = [
-    { id: '1', name: 'user1', value: 55 },
-    { id: '2', name: 'user2', value: 50 },
-    { id: '3', name: 'user3', value: 45 },
-    { id: '4', name: 'user4', value: 40 },
-    { id: '5', name: 'user5', value: 35 },
-    { id: '6', name: 'user6', value: 30 },
-    { id: '7', name: 'user7', value: 25 },
-    { id: '8', name: 'user8', value: 20 },
-    { id: '9', name: 'user9', value: 15 },
-    { id: '10', name: 'user10', value: 10 },
-  ];
 
-const IdolPage  = () => {
-return (
+function generateRandomUserData() {
+  const userData = [];
+
+  for (let i = 0; i < 10; i++) {
+    // 각 사용자에 대한 임의의 데이터 생성
+    userData.push({
+      id: i, // 실제 애플리케이션에서는 더 의미 있는 고유 ID를 사용해야 할 수 있습니다.
+      name: `User ${i + 1}`,
+      value: Math.floor(Math.random() * 100) + 1, // 1부터 100 사이의 임의의 값
+    });
+  }
+
+  return userData;
+}
+
+const userData = generateRandomUserData();
+
+
+
+function IdolPage({ route }) {
+  const { idolId } = route.params;
+  const [idolInfo, setIdolInfo] = useState(null);
+
+  useEffect(() => {
+    const idolData = idolDB[idolId];
+    if (idolData) {
+      setIdolInfo(idolData);
+    } else {
+      console.log('아이돌 정보를 찾을 수 없습니다.');
+    }
+  }, [idolId]); // idolId가 변경될 때마다 실행
+
+  if (!idolInfo) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  return (
   <View style={idolpagestyles.container}>
     {/* 상단 부분 */}
     <View style={idolpagestyles.topSection}>
-        <View style={idolpagestyles.starContainer}>
-        <Text style={idolpagestyles.starText}>1</Text>
-        </View>
         <Image
         style={idolpagestyles.profileImage}
-        source={require('./Image/ProfileImage1.jpg')}
+        source={idolInfo.profilePicture}
         />
-        <Text style={idolpagestyles.profileName}>Kim Chaewon</Text>
+        <Text style={idolpagestyles.profileName}>{idolInfo.name}</Text>
+        <Text style={idolpagestyles.profileAgency}>{idolInfo.agency}</Text>
     </View>
     
     {/* 하단 순위 부분 */}
@@ -52,6 +79,7 @@ return (
   </View>
   );
 };
+
 
 const idolpagestyles = StyleSheet.create({
     container: {
